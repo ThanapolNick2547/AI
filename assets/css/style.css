@@ -1,0 +1,338 @@
+/* ==========================================================================
+   Core Variables & Theme Settings
+   ========================================================================== */
+:root {
+    --primary-color: #D02752;
+    --primary-hover: #b01f43;
+    --secondary-color: #f8f9fa;
+    --text-color: #333333;
+    --text-muted: #6c757d;
+    --bg-light: #f4f6f9;
+    --sidebar-bg: #ffffff;
+    --sidebar-text: #495057;
+    --sidebar-active-bg: #ffeef2;
+    --sidebar-width: 250px;
+    --sidebar-collapsed-width: 70px;
+    --header-height: 60px;
+    --border-color: #e9ecef;
+    --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    --transition-speed: 0.3s;
+}
+
+/* ==========================================================================
+   Base Styles
+   ========================================================================== */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-color);
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--primary-hover);
+}
+
+.text-primary { color: var(--primary-color) !important; }
+.bg-primary { background-color: var(--primary-color) !important; }
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+/* ==========================================================================
+   Layout Structure
+   ========================================================================== */
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* ==========================================================================
+   Sidebar
+   ========================================================================== */
+#sidebar {
+    min-width: var(--sidebar-width);
+    max-width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    transition: all var(--transition-speed);
+    height: 100vh;
+    position: fixed;
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
+    overflow-y: auto;
+}
+
+#sidebar.collapsed {
+    min-width: var(--sidebar-collapsed-width);
+    max-width: var(--sidebar-collapsed-width);
+}
+
+#sidebar .sidebar-header {
+    padding: 15px 20px;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#sidebar .sidebar-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    transition: opacity var(--transition-speed);
+    white-space: nowrap;
+}
+
+#sidebar.collapsed .sidebar-header h3 {
+    opacity: 0;
+    display: none;
+}
+
+#sidebar .sidebar-header .logo-icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-right: 10px;
+}
+
+#sidebar.collapsed .sidebar-header .logo-icon {
+    margin-right: 0;
+    margin: 0 auto;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul li {
+    padding: 5px 15px;
+}
+
+#sidebar ul li a {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    color: var(--sidebar-text);
+    border-radius: 8px;
+    transition: all 0.2s;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+#sidebar ul li a i {
+    margin-right: 15px;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+#sidebar.collapsed ul li a {
+    justify-content: center;
+    padding: 10px;
+}
+
+#sidebar.collapsed ul li a i {
+    margin-right: 0;
+    font-size: 1.3rem;
+}
+
+#sidebar.collapsed ul li a span {
+    display: none;
+}
+
+#sidebar ul li a:hover {
+    background: var(--bg-light);
+    color: var(--primary-color);
+}
+
+#sidebar ul li.active > a {
+    background: var(--sidebar-active-bg);
+    color: var(--primary-color);
+}
+
+#sidebar ul li a[data-bs-toggle="collapse"] {
+    position: relative;
+}
+
+#sidebar ul li a.dropdown-toggle::after {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.2s;
+}
+
+#sidebar ul li a[aria-expanded="true"]::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+#sidebar.collapsed ul li a.dropdown-toggle::after {
+    display: none;
+}
+
+#sidebar ul ul a {
+    font-size: 0.9rem;
+    padding-left: 45px !important;
+    background: transparent;
+}
+
+#sidebar.collapsed ul ul a {
+    padding-left: 0 !important;
+    justify-content: center;
+}
+
+/* ==========================================================================
+   Main Content
+   ========================================================================== */
+#content {
+    width: calc(100% - var(--sidebar-width));
+    min-height: 100vh;
+    transition: all var(--transition-speed);
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#sidebar.collapsed ~ #content {
+    width: calc(100% - var(--sidebar-collapsed-width));
+}
+
+/* ==========================================================================
+   Header Navbar
+   ========================================================================== */
+.main-header {
+    height: var(--header-height);
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.sidebar-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.sidebar-toggle:hover {
+    background: var(--bg-light);
+    color: var(--primary-color);
+}
+
+/* ==========================================================================
+   Dashboard Cards
+   ========================================================================== */
+.stat-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-right: 20px;
+}
+
+.stat-icon.primary { background: rgba(208, 39, 82, 0.1); color: var(--primary-color); }
+.stat-icon.success { background: rgba(25, 135, 84, 0.1); color: #198754; }
+.stat-icon.warning { background: rgba(255, 193, 7, 0.1); color: #ffc107; }
+.stat-icon.info { background: rgba(13, 202, 240, 0.1); color: #0dcaf0; }
+
+.stat-details h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.stat-details p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.chart-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    margin-bottom: 24px;
+}
+
+.chart-card h5 {
+    color: var(--text-color);
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: calc(-1 * var(--sidebar-width));
+    }
+    
+    #sidebar.show {
+        margin-left: 0;
+    }
+    
+    #sidebar.collapsed {
+        margin-left: calc(-1 * var(--sidebar-collapsed-width));
+    }
+    
+    #content {
+        width: 100%;
+    }
+    
+    #sidebar.collapsed ~ #content {
+        width: 100%;
+    }
+    
+    #sidebar.show ~ #content {
+        position: fixed;
+    }
+}
