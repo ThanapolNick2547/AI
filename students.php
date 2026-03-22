@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             } catch (Exception $e) {
                 if ($e instanceof PDOException && $e->getCode() == 23000) {
-                    $error = "Student Code already exists.";
+                    $error = "รหัสนักเรียนซ้ำในระบบ";
                 } else {
                     $error = "Error adding student: " . $e->getMessage();
                 }
@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             } catch (Exception $e) {
                 if ($e instanceof PDOException && $e->getCode() == 23000) {
-                    $error = "Student Code already exists.";
+                    $error = "รหัสนักเรียนซ้ำในระบบ";
                 } else {
                     $error = "Error updating student: " . $e->getMessage();
                 }
@@ -144,7 +144,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header("Location: students.php");
                 exit();
             } catch (Exception $e) {
-                $error = "Error deleting student: " . $e->getMessage();
+                if ($e instanceof PDOException && $e->getCode() == 23000) {
+                    $error = "ไม่สามารถลบข้อมูลนี้ได้ เนื่องจากมีการอ้างอิงหรือถูกใช้งานอยู่ในระบบอื่น";
+                } else {
+                    $error = "Error deleting student: " . $e->getMessage();
+                }
             }
         }
     }
@@ -189,16 +193,16 @@ include 'includes/header.php';
 <!-- Breadcrumb -->
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Master Data</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Students</li>
+        <li class="breadcrumb-item"><a href="index.php">หน้าหลัก</a></li>
+        <li class="breadcrumb-item"><a href="#">ข้อมูลหลัก</a></li>
+        <li class="breadcrumb-item active" aria-current="page">ข้อมูลนักเรียน</li>
     </ol>
 </nav>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="mb-0 fw-bold text-dark">Students Management</h2>
+    <h2 class="mb-0 fw-bold text-dark">จัดการข้อมูลนักเรียน</h2>
     <button type="button" class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#addStudentModal">
-        <i class="fas fa-plus-circle me-1"></i> Add New Student
+        <i class="fas fa-plus-circle me-1"></i> เพิ่มข้อมูลนักเรียนใหม่
     </button>
 </div>
 
@@ -220,10 +224,10 @@ include 'includes/header.php';
 <!-- Data Table Card -->
 <div class="card border-0 shadow-sm" style="border-radius: 12px; border: 1px solid var(--border-color) !important;">
     <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center" style="border-radius: 12px 12px 0 0;">
-        <h5 class="mb-0 fw-bold">Student List</h5>
+        <h5 class="mb-0 fw-bold">รายชื่อนักเรียนทั้งหมด</h5>
         <form method="GET" class="d-flex" style="max-width: 300px;">
             <div class="input-group input-group-sm">
-                <input type="text" name="search" class="form-control" placeholder="Search name or ID..." value="<?php echo e($search); ?>">
+                <input type="text" name="search" class="form-control" placeholder="ค้นหาชื่อ หรือ รหัส..." value="<?php echo e($search); ?>">
                 <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
                 <?php if ($search): ?>
                     <a href="students.php" class="btn btn-outline-danger"><i class="fas fa-times"></i></a>
@@ -234,15 +238,15 @@ include 'includes/header.php';
     
     <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+            <table class="table table-hover align-middle mb-0 datatable">
                 <thead class="bg-light">
                     <tr>
-                        <th class="ps-4">Student ID</th>
-                        <th>Profile</th>
-                        <th>Name</th>
-                        <th>Class/Room</th>
-                        <th>Parent Contact</th>
-                        <th class="pe-4 text-end">Actions</th>
+                        <th class="ps-4">รหัสนักเรียน</th>
+                        <th>รูปโปรไฟล์</th>
+                        <th>ชื่อ-นามสกุล</th>
+                        <th>ชั้นเรียน/ห้อง</th>
+                        <th>เบอร์ผู้ปกครอง</th>
+                        <th class="pe-4 text-end">จัดการ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -267,7 +271,7 @@ include 'includes/header.php';
                                 </td>
                                 <td>
                                     <span class="badge bg-info text-dark border"><i class="fas fa-layer-group me-1"></i> <?php echo e($s['class_level']); ?></span>
-                                    <span class="badge bg-light text-dark border ms-1">Room <?php echo e($s['room_number']); ?></span>
+                                    <span class="badge bg-light text-dark border ms-1">ห้อง <?php echo e($s['room_number']); ?></span>
                                 </td>
                                 <td>
                                     <?php if($s['parent_phone']): ?>
@@ -298,17 +302,13 @@ include 'includes/header.php';
                                 </td>
                             </tr>
                         <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="6" class="text-center py-4 text-muted">No students found.</td>
-                        </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
     <div class="card-footer bg-white border-top-0 py-3" style="border-radius: 0 0 12px 12px;">
-        <small class="text-muted">Total: <?php echo count($students); ?> records</small>
+        <small class="text-muted">รวมทั้งหมด: <?php echo count($students); ?> รายการ</small>
     </div>
 </div>
 
@@ -465,7 +465,7 @@ include 'includes/header.php';
   <div class="modal-dialog modal-sm modal-dialog-centered">
     <div class="modal-content border-0 shadow">
       <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="deleteStudentModalLabel"><i class="fas fa-exclamation-triangle me-2"></i> Confirm Delete</h5>
+        <h5 class="modal-title" id="deleteStudentModalLabel"><i class="fas fa-exclamation-triangle me-2"></i> ยืนยันการลบ</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="POST" action="students.php">
@@ -475,14 +475,14 @@ include 'includes/header.php';
           
           <div class="modal-body text-center p-4">
             <i class="fas fa-trash-alt text-danger mb-3" style="font-size: 3rem;"></i>
-            <p class="mb-1">Are you sure you want to delete this student?</p>
+            <p class="mb-1">คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนักเรียนคนนี้?</p>
             <strong id="delete_student_name" class="text-dark d-block mb-3"></strong>
-            <p class="text-muted small mb-0">This action cannot be undone.</p>
+            <p class="text-muted small mb-0">การกระทำนี้ไม่สามารถย้อนกลับได้</p>
           </div>
           
           <div class="modal-footer bg-light justify-content-center border-0">
-            <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-danger btn-sm px-3">Yes, Delete</button>
+            <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="submit" class="btn btn-danger btn-sm px-3">ยืนยันการลบ</button>
           </div>
       </form>
     </div>

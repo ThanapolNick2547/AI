@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SchoolAI - Management System</title>
+    <title>SchoolAI - ระบบจัดการสถานศึกษา</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
@@ -16,6 +16,9 @@
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- DataTables Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
@@ -35,7 +38,7 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="ms-3 d-none d-md-block">
-                    <h5 class="mb-0 text-dark fw-bold">SchoolAI Dashboard</h5>
+                    <h5 class="mb-0 text-dark fw-bold">แดชบอร์ด SchoolAI</h5>
                 </div>
             </div>
             
@@ -45,15 +48,15 @@
                     <a class="text-secondary position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-bell fs-5"></i>
                         <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
-                            <span class="visually-hidden">New alerts</span>
+                            <span class="visually-hidden">การแจ้งเตือนใหม่</span>
                         </span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0">
-                        <li><h6 class="dropdown-header">Notifications</h6></li>
+                        <li><h6 class="dropdown-header">การแจ้งเตือน</h6></li>
                         <li><a class="dropdown-item" href="#">Meeting at 10:00 AM</a></li>
                         <li><a class="dropdown-item" href="#">New student registered</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-center small text-muted" href="#">View all</a></li>
+                        <li><a class="dropdown-item text-center small text-muted" href="#">ดูทั้งหมด</a></li>
                     </ul>
                 </div>
                 
@@ -67,10 +70,10 @@
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw me-2 text-muted"></i> Profile</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-muted"></i> Settings</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw me-2 text-muted"></i> โปรไฟล์ส่วนตัว</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-muted"></i> การตั้งค่า</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="logout.php"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i> Logout</a></li>
+                        <li><a class="dropdown-item text-danger" href="logout.php"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i> ออกจากระบบ</a></li>
                     </ul>
                 </div>
             </div>

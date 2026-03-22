@@ -3,11 +3,11 @@
         <!-- Footer Content -->
         <footer class="mt-auto py-3 px-4 bg-white border-top">
             <div class="d-flex align-items-center justify-content-between small">
-                <div class="text-muted">Copyright &copy; SchoolAI <?php echo date('Y'); ?>. All rights reserved.</div>
+                <div class="text-muted">สงวนลิขสิทธิ์ &copy; SchoolAI <?php echo date('Y'); ?></div>
                 <div>
-                    <a href="#" class="text-decoration-none text-muted me-3">Privacy Policy</a>
-                    <a href="#" class="text-decoration-none text-muted h-100 me-3">Terms &amp; Conditions</a>
-                    <span class="text-muted">Version 1.0.0</span>
+                    <a href="#" class="text-decoration-none text-muted me-3">นโยบายความเป็นส่วนตัว</a>
+                    <a href="#" class="text-decoration-none text-muted h-100 me-3">เงื่อนไขการใช้งาน</a>
+                    <span class="text-muted">เวอร์ชัน 1.0.0</span>
                 </div>
             </div>
         </footer>
@@ -20,6 +20,10 @@
 
 <!-- Bootstrap 5 JS Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -34,6 +38,32 @@
             initDashboardCharts();
         }
     };
+
+    $(document).ready(function() {
+        // Initialize DataTables on elements with the class 'table-datatable'
+        // Or directly apply to standard static tables that aren't on the dashboard
+        $('.datatable').DataTable({
+            "language": {
+                "sProcessing":   "กำลังดำเนินการ...",
+                "sLengthMenu":   "แสดง _MENU_ แถว",
+                "sZeroRecords":  "ไม่พบข้อมูล",
+                "sInfo":         "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
+                "sInfoEmpty":    "แสดง 0 ถึง 0 จาก 0 แถว",
+                "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกแถว)",
+                "sInfoPostFix":  "",
+                "sSearch":       "ค้นหา:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "หน้าแรก",
+                    "sPrevious": "ก่อนหน้า",
+                    "sNext":     "ถัดไป",
+                    "sLast":     "หน้าสุดท้าย"
+                }
+            },
+            "pageLength": 10,
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "ทั้งหมด"]]
+        });
+    });
 </script>
 
 </body>

@@ -70,12 +70,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $stmt = $pdo->prepare("INSERT INTO teachers (teacher_code, first_name, last_name, phone, line_id, department, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?)");
                 $stmt->execute([$code, $first, $last, $phone, $line_id, $dept, $profile_pic]);
-                $_SESSION['success_msg'] = "Teacher added successfully!";
+                $_SESSION['success_msg'] = "เพิ่มข้อมูลครูสำเร็จ!";
                 header("Location: teachers.php");
                 exit();
             } catch (Exception $e) {
                 if ($e instanceof PDOException && $e->getCode() == 23000) {
-                    $error = "Teacher Code already exists.";
+                    $error = "รหัสประจำตัวครูซ้ำในระบบ";
                 } else {
                     $error = "Error adding teacher: " . $e->getMessage();
                 }
@@ -111,12 +111,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $stmt = $pdo->prepare("UPDATE teachers SET teacher_code = ?, first_name = ?, last_name = ?, phone = ?, line_id = ?, department = ?, profile_picture = ? WHERE id = ?");
                 $stmt->execute([$code, $first, $last, $phone, $line_id, $dept, $profile_pic, $id]);
-                $_SESSION['success_msg'] = "Teacher updated successfully!";
+                $_SESSION['success_msg'] = "อัปเดตข้อมูลครูสำเร็จ!";
                 header("Location: teachers.php");
                 exit();
             } catch (Exception $e) {
                 if ($e instanceof PDOException && $e->getCode() == 23000) {
-                    $error = "Teacher Code already exists.";
+                    $error = "รหัสประจำตัวครูซ้ำในระบบ";
                 } else {
                     $error = "Error updating teacher: " . $e->getMessage();
                 }
@@ -140,11 +140,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $stmt = $pdo->prepare("DELETE FROM teachers WHERE id = ?");
                 $stmt->execute([$id]);
-                $_SESSION['success_msg'] = "Teacher deleted successfully!";
+                $_SESSION['success_msg'] = "ลบข้อมูลครูสำเร็จ!";
                 header("Location: teachers.php");
                 exit();
             } catch (Exception $e) {
-                $error = "Error deleting teacher: " . $e->getMessage();
+                if ($e instanceof PDOException && $e->getCode() == 23000) {
+                    $error = "ไม่สามารถลบข้อมูลนี้ได้ เนื่องจากมีการอ้างอิงหรือถูกใช้งานอยู่ในระบบอื่น";
+                } else {
+                    $error = "Error deleting teacher: " . $e->getMessage();
+                }
             }
         }
     }
@@ -189,16 +193,16 @@ include 'includes/header.php';
 <!-- Breadcrumb -->
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Master Data</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Teachers</li>
+        <li class="breadcrumb-item"><a href="index.php">หน้าหลัก</a></li>
+        <li class="breadcrumb-item"><a href="#">ข้อมูลหลัก</a></li>
+        <li class="breadcrumb-item active" aria-current="page">ข้อมูลครู</li>
     </ol>
 </nav>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="mb-0 fw-bold text-dark">Teachers Management</h2>
+    <h2 class="mb-0 fw-bold text-dark">จัดการข้อมูลครูผู้สอน</h2>
     <button type="button" class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#addTeacherModal">
-        <i class="fas fa-plus-circle me-1"></i> Add New Teacher
+        <i class="fas fa-plus-circle me-1"></i> เพิ่มข้อมูลครูใหม่
     </button>
 </div>
 
@@ -220,10 +224,10 @@ include 'includes/header.php';
 <!-- Data Table Card -->
 <div class="card border-0 shadow-sm" style="border-radius: 12px; border: 1px solid var(--border-color) !important;">
     <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center" style="border-radius: 12px 12px 0 0;">
-        <h5 class="mb-0 fw-bold">Teacher List</h5>
+        <h5 class="mb-0 fw-bold">รายชื่อครูทั้งหมด</h5>
         <form method="GET" class="d-flex" style="max-width: 300px;">
             <div class="input-group input-group-sm">
-                <input type="text" name="search" class="form-control" placeholder="Search name or ID..." value="<?php echo e($search); ?>">
+                <input type="text" name="search" class="form-control" placeholder="ค้นหาชื่อ หรือ รหัส..." value="<?php echo e($search); ?>">
                 <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
                 <?php if ($search): ?>
                     <a href="teachers.php" class="btn btn-outline-danger"><i class="fas fa-times"></i></a>
@@ -234,15 +238,15 @@ include 'includes/header.php';
     
     <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+            <table class="table table-hover align-middle mb-0 datatable">
                 <thead class="bg-light">
                     <tr>
-                        <th class="ps-4">Teacher ID</th>
-                        <th>Profile</th>
-                        <th>Name</th>
-                        <th>Department</th>
-                        <th>Contact</th>
-                        <th class="pe-4 text-end">Actions</th>
+                        <th class="ps-4">รหัสครู</th>
+                        <th>รูปโปรไฟล์</th>
+                        <th>ชื่อ-นามสกุล</th>
+                        <th>กลุ่มวิชา</th>
+                        <th>ข้อมูลติดต่อ</th>
+                        <th class="pe-4 text-end">จัดการ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -298,17 +302,13 @@ include 'includes/header.php';
                                 </td>
                             </tr>
                         <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="6" class="text-center py-4 text-muted">No teachers found.</td>
-                        </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
     <div class="card-footer bg-white border-top-0 py-3" style="border-radius: 0 0 12px 12px;">
-        <small class="text-muted">Total: <?php echo count($teachers); ?> records</small>
+        <small class="text-muted">รวมทั้งหมด: <?php echo count($teachers); ?> รายการ</small>
     </div>
 </div>
 
@@ -321,7 +321,7 @@ include 'includes/header.php';
   <div class="modal-dialog">
     <div class="modal-content border-0 shadow">
       <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="addTeacherModalLabel"><i class="fas fa-user-plus me-2"></i> Add New Teacher</h5>
+        <h5 class="modal-title" id="addTeacherModalLabel"><i class="fas fa-user-plus me-2"></i> เพิ่มข้อมูลครูใหม่</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="POST" action="teachers.php" enctype="multipart/form-data">
@@ -331,58 +331,58 @@ include 'includes/header.php';
           <div class="modal-body">
             
             <div class="mb-3 text-center">
-                <label for="profile_picture" class="form-label text-muted fw-semibold small d-block text-start">Profile Picture (Max 2MB)</label>
+                <label for="profile_picture" class="form-label text-muted fw-semibold small d-block text-start">รูปโปรไฟล์ (ไม่เกิน 2MB)</label>
                 <div class="input-group">
                     <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/png, image/jpeg, image/gif, image/webp">
                 </div>
             </div>
 
             <div class="mb-3">
-                <label for="teacher_code" class="form-label text-muted fw-semibold small">Teacher ID / Code <span class="text-danger">*</span></label>
+                <label for="teacher_code" class="form-label text-muted fw-semibold small">รหัสประจำตัวครู <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="teacher_code" name="teacher_code" required>
             </div>
             
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="first_name" class="form-label text-muted fw-semibold small">First Name <span class="text-danger">*</span></label>
+                    <label for="first_name" class="form-label text-muted fw-semibold small">ชื่อ <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="first_name" name="first_name" required>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="last_name" class="form-label text-muted fw-semibold small">Last Name <span class="text-danger">*</span></label>
+                    <label for="last_name" class="form-label text-muted fw-semibold small">นามสกุล <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="last_name" name="last_name" required>
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="phone" class="form-label text-muted fw-semibold small">Phone Number</label>
+                    <label for="phone" class="form-label text-muted fw-semibold small">เบอร์โทรศัพท์</label>
                     <input type="text" class="form-control" id="phone" name="phone">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="line_id" class="form-label text-muted fw-semibold small">Line ID</label>
+                    <label for="line_id" class="form-label text-muted fw-semibold small">ไอดีไลน์</label>
                     <input type="text" class="form-control" id="line_id" name="line_id">
                 </div>
             </div>
             
             <div class="mb-3">
-                <label for="department" class="form-label text-muted fw-semibold small">Department / Subject Group</label>
+                <label for="department" class="form-label text-muted fw-semibold small">หมวดหมู่/กลุ่มวิชา</label>
                 <select class="form-select" id="department" name="department">
-                    <option value="">Select Department...</option>
-                    <option value="Mathematics">Mathematics</option>
-                    <option value="Science">Science</option>
-                    <option value="English">English</option>
-                    <option value="Thai Language">Thai Language</option>
-                    <option value="Social Studies">Social Studies</option>
-                    <option value="Physical Education">Physical Education</option>
-                    <option value="Arts">Arts</option>
-                    <option value="Technology">Technology</option>
+                    <option value="">เลือกกลุ่มวิชา...</option>
+                    <option value="Mathematics">คณิตศาสตร์ (Mathematics)</option>
+                    <option value="Science">วิทยาศาสตร์ (Science)</option>
+                    <option value="English">ภาษาอังกฤษ (English)</option>
+                    <option value="Thai Language">ภาษาไทย (Thai Language)</option>
+                    <option value="Social Studies">สังคมศึกษา (Social Studies)</option>
+                    <option value="Physical Education">พลศึกษา (Physical Education)</option>
+                    <option value="Arts">ศิลปะ (Arts)</option>
+                    <option value="Technology">เทคโนโลยี (Technology)</option>
                 </select>
             </div>
           </div>
           
           <div class="modal-footer bg-light">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save Teacher</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="submit" class="btn btn-primary">บันทึกข้อมูล</button>
           </div>
       </form>
     </div>
@@ -467,7 +467,7 @@ include 'includes/header.php';
   <div class="modal-dialog modal-sm modal-dialog-centered">
     <div class="modal-content border-0 shadow">
       <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="deleteTeacherModalLabel"><i class="fas fa-exclamation-triangle me-2"></i> Confirm Delete</h5>
+        <h5 class="modal-title" id="deleteTeacherModalLabel"><i class="fas fa-exclamation-triangle me-2"></i> ยืนยันการลบ</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="POST" action="teachers.php">
@@ -477,14 +477,14 @@ include 'includes/header.php';
           
           <div class="modal-body text-center p-4">
             <i class="fas fa-trash-alt text-danger mb-3" style="font-size: 3rem;"></i>
-            <p class="mb-1">Are you sure you want to delete this teacher?</p>
+            <p class="mb-1">คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลครูท่านนี้?</p>
             <strong id="delete_teacher_name" class="text-dark d-block mb-3"></strong>
-            <p class="text-muted small mb-0">This action cannot be undone.</p>
+            <p class="text-muted small mb-0">การกระทำนี้ไม่สามารถย้อนกลับได้</p>
           </div>
           
           <div class="modal-footer bg-light justify-content-center border-0">
-            <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-danger btn-sm px-3">Yes, Delete</button>
+            <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="submit" class="btn btn-danger btn-sm px-3">ยืนยันการลบ</button>
           </div>
       </form>
     </div>

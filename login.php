@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password = $_POST['password'];
 
         if (empty($username) || empty($password)) {
-            $error = "Please enter both username and password.";
+            $error = "กรุณากรอกทั้งชื่อผู้ใช้และรหัสผ่าน";
         } else {
             try {
                 // Prepare statement to fetch user by username
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if ($user) {
                     if ($user['status'] !== 'active') {
-                        $error = "Your account has been disabled. Please contact the administrator.";
+                        $error = "บัญชีของคุณถูกระงับ กรุณาติดต่อผู้ดูแลระบบ";
                     } else if (password_verify($password, $user['password_hash'])) {
                         // Password is correct, start new secure session
                         session_regenerate_id(true);
@@ -47,10 +47,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         header("Location: index.php");
                         exit();
                     } else {
-                        $error = "Invalid username or password.";
+                        $error = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
                     }
                 } else {
-                    $error = "Invalid username or password.";
+                    $error = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
                 }
             } catch (PDOException $e) {
                 error_log("Login Error: " . $e->getMessage());
@@ -68,7 +68,7 @@ $csrf_token = generateCSRFToken();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SchoolAI Management System</title>
+    <title>เข้าสู่ระบบ - SchoolAI</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
     <!-- Google Fonts: Inter -->
@@ -132,10 +132,10 @@ $csrf_token = generateCSRFToken();
     <div class="login-header">
         <i class="fas fa-school logo-icon"></i>
         <h3 class="fw-bold mb-0">SchoolAI</h3>
-        <p class="mb-0 text-white-50">Management System</p>
+        <p class="mb-0 text-white-50">ระบบจัดการสถานศึกษา</p>
     </div>
     <div class="login-body">
-        <h5 class="text-center fw-bold mb-4 text-dark">Sign In to Your Account</h5>
+        <h5 class="text-center fw-bold mb-4 text-dark">เข้าสู่ระบบบัญชีของคุณ</h5>
         
         <?php if (!empty($error)): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -146,7 +146,7 @@ $csrf_token = generateCSRFToken();
 
         <?php if (isset($_GET['logout'])): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fas fa-check-circle me-2"></i> You have successfully logged out.
+                <i class="fas fa-check-circle me-2"></i> คุณได้ออกจากระบบสำเร็จแล้ว
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
@@ -155,29 +155,29 @@ $csrf_token = generateCSRFToken();
             <input type="hidden" name="csrf_token" value="<?php echo e($csrf_token); ?>">
             
             <div class="mb-3">
-                <label for="username" class="form-label text-muted fw-semibold small">Username</label>
+                <label for="username" class="form-label text-muted fw-semibold small">ชื่อผู้ใช้งาน</label>
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0 text-muted"><i class="fas fa-user"></i></span>
-                    <input type="text" class="form-control border-start-0" id="username" name="username" placeholder="Enter username" required value="<?php echo isset($_POST['username']) ? e($_POST['username']) : ''; ?>">
+                    <input type="text" class="form-control border-start-0" id="username" name="username" placeholder="กรอกชื่อผู้ใช้งาน" required value="<?php echo isset($_POST['username']) ? e($_POST['username']) : ''; ?>">
                 </div>
             </div>
             
             <div class="mb-4">
                 <div class="d-flex justify-content-between align-items-center">
-                    <label for="password" class="form-label text-muted fw-semibold small mb-0">Password</label>
-                    <a href="#" class="small text-decoration-none">Forgot Password?</a>
+                    <label for="password" class="form-label text-muted fw-semibold small mb-0">รหัสผ่าน</label>
+                    <a href="#" class="small text-decoration-none">ลืมรหัสผ่าน?</a>
                 </div>
                 <div class="input-group mt-2">
                     <span class="input-group-text bg-light border-end-0 text-muted"><i class="fas fa-lock"></i></span>
-                    <input type="password" class="form-control border-start-0" id="password" name="password" placeholder="Enter password" required>
+                    <input type="password" class="form-control border-start-0" id="password" name="password" placeholder="กรอกรหัสผ่าน" required>
                 </div>
             </div>
             
-            <button type="submit" class="btn btn-primary btn-login mt-2">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-login mt-2">เข้าสู่ระบบ</button>
         </form>
         
         <div class="text-center mt-4">
-            <p class="text-muted small mb-0">Mock Accounts (Pass: password123)</p>
+            <p class="text-muted small mb-0">บัญชีทดสอบ (รหัสผ่าน: password123)</p>
             <p class="text-muted small"><strong>admin</strong>, <strong>teacher1</strong>, <strong>student1</strong></p>
         </div>
     </div>
