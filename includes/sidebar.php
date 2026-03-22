@@ -91,13 +91,17 @@
             </a>
         </li>
         
-        <li>
-            <a href="#settingsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <li class="<?php echo ($current_page == 'users.php') ? 'active' : ''; ?>">
+            <a href="#settingsSubmenu" data-bs-toggle="collapse" aria-expanded="<?php echo ($current_page == 'users.php') ? 'true' : 'false'; ?>" class="dropdown-toggle">
                 <i class="fas fa-cog"></i>
                 <span>การตั้งค่า</span>
             </a>
-            <ul class="collapse list-unstyled sidebar-submenu" id="settingsSubmenu" data-bs-parent="#sidebar">
-                <li><a href="#"><i class="fas fa-user-shield text-muted fa-sm me-2"></i> บัญชีผู้ใช้งาน</a></li>
+            <ul class="collapse list-unstyled sidebar-submenu <?php echo ($current_page == 'users.php') ? 'show' : ''; ?>" id="settingsSubmenu" data-bs-parent="#sidebar">
+                <li class="<?php echo ($current_page == 'users.php') ? 'active-submenu' : ''; ?>">
+                    <a href="users.php" class="<?php echo ($current_page == 'users.php') ? 'text-primary fw-bold' : ''; ?>">
+                        <i class="fas fa-user-shield <?php echo ($current_page == 'users.php') ? 'text-primary' : 'text-muted'; ?> fa-sm me-2"></i> บัญชีผู้ใช้งาน
+                    </a>
+                </li>
             </ul>
         </li>
     </ul>
