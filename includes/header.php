@@ -61,17 +61,38 @@
                 </div>
                 
                 <!-- User Profile -->
+                <?php
+                // Fetch dynamic avatar and name if available
+                $navAvatarSrc = "https://ui-avatars.com/api/?name=" . urlencode($_SESSION['username'] ?? 'User') . "&background=D02752&color=fff";
+                $navDisplayName = $_SESSION['username'] ?? 'User';
+                
+                if (isset($pdo) && isset($_SESSION['user_id'])) {
+                    try {
+                        $stmt = $pdo->prepare("SELECT full_name, avatar FROM users WHERE id = ?");
+                        $stmt->execute([$_SESSION['user_id']]);
+                        if ($row = $stmt->fetch()) {
+                            if (!empty($row['full_name'])) {
+                                $navDisplayName = $row['full_name'];
+                                $navAvatarSrc = "https://ui-avatars.com/api/?name=" . urlencode($navDisplayName) . "&background=D02752&color=fff";
+                            }
+                            if (!empty($row['avatar']) && file_exists(__DIR__ . '/../assets/images/avatars/' . $row['avatar'])) {
+                                $navAvatarSrc = "assets/images/avatars/" . $row['avatar'];
+                            }
+                        }
+                    } catch (PDOException $e) {}
+                }
+                ?>
                 <div class="dropdown">
                     <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://ui-avatars.com/api/?name=<?php echo urlencode($_SESSION['username'] ?? 'User'); ?>&background=D02752&color=fff" alt="User Avatar" class="rounded-circle me-2" width="35" height="35">
+                        <img src="<?php echo e($navAvatarSrc); ?>" alt="User Avatar" class="rounded-circle me-2 object-fit-cover shadow-sm" width="35" height="35" style="border: 2px solid #fff;">
                         <div class="d-none d-md-block text-dark">
-                            <span class="fw-semibold d-block" style="line-height:1;"><?php echo e($_SESSION['username'] ?? 'User'); ?></span>
+                            <span class="fw-semibold d-block" style="line-height:1;"><?php echo e($navDisplayName); ?></span>
                             <small class="text-muted text-uppercase" style="font-size:11px;"><?php echo e($_SESSION['user_role'] ?? 'Guest'); ?></small>
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw me-2 text-muted"></i> โปรไฟล์ส่วนตัว</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-muted"></i> การตั้งค่า</a></li>
+                        <li><a class="dropdown-item" href="profile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-primary"></i> โปรไฟล์ส่วนตัว</a></li>
+                        <li><a class="dropdown-item" href="roles.php"><i class="fas fa-cogs fa-sm fa-fw me-2 text-muted"></i> การตั้งค่า</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item text-danger" href="logout.php"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i> ออกจากระบบ</a></li>
                     </ul>

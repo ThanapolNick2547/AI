@@ -79,6 +79,7 @@
             </a>
         </li>
         
+        <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
         <div class="px-3 py-2 mt-4">
             <small class="text-uppercase fw-bold text-muted ps-2" style="font-size: 0.75rem;">ตั้งค่าระบบ</small>
         </div>
@@ -104,5 +105,6 @@
                 </li>
             </ul>
         </li>
+        <?php endif; ?>
     </ul>
 </nav>

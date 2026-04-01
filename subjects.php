@@ -238,7 +238,7 @@ include 'includes/header.php';
   <div class="modal-dialog">
     <div class="modal-content border-0 shadow">
       <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="addSubjectModalLabel"><i class="fas fa-book-medical me-2"></i> Add New Subject</h5>
+        <h5 class="modal-title" id="addSubjectModalLabel"><i class="fas fa-book-medical me-2"></i> เพิ่มรายวิชาใหม่</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="POST" action="subjects.php">
@@ -249,47 +249,47 @@ include 'includes/header.php';
 
             <div class="row">
                 <div class="col-md-5 mb-3">
-                    <label for="subject_code" class="form-label text-muted fw-semibold small">Subject Code <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="subject_code" name="subject_code" placeholder="e.g. MATH101" required>
+                    <label for="subject_code" class="form-label text-muted fw-semibold small">รหัสวิชา <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="subject_code" name="subject_code" placeholder="เช่น MATH101" required>
                 </div>
                 <div class="col-md-7 mb-3">
-                    <label for="subject_name" class="form-label text-muted fw-semibold small">Subject Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="subject_name" name="subject_name" placeholder="e.g. Basic Mathematics" required>
+                    <label for="subject_name" class="form-label text-muted fw-semibold small">ชื่อวิชา <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="subject_name" name="subject_name" placeholder="เช่น คณิตศาสตร์พื้นฐาน" required>
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-md-8 mb-3">
-                    <label for="department" class="form-label text-muted fw-semibold small">Department <span class="text-danger">*</span></label>
+                    <label for="department" class="form-label text-muted fw-semibold small">กลุ่มสาระการเรียนรู้ <span class="text-danger">*</span></label>
                     <select class="form-select" id="department" name="department" required>
-                        <option value="">Select Department...</option>
-                        <option value="Mathematics">Mathematics</option>
-                        <option value="Science">Science</option>
-                        <option value="Thai Language">Thai Language</option>
-                        <option value="Foreign Languages">Foreign Languages</option>
-                        <option value="Social Studies">Social Studies</option>
-                        <option value="Physical Education">Physical Education</option>
-                        <option value="Arts">Arts</option>
-                        <option value="Technology">Technology</option>
-                        <option value="Other">Other</option>
+                        <option value="">เลือกกลุ่มสาระ...</option>
+                        <option value="Mathematics">คณิตศาสตร์</option>
+                        <option value="Science">วิทยาศาสตร์</option>
+                        <option value="Thai Language">ภาษาไทย</option>
+                        <option value="Foreign Languages">ภาษาต่างประเทศ</option>
+                        <option value="Social Studies">สังคมศึกษา</option>
+                        <option value="Physical Education">สุขศึกษาและพลศึกษา</option>
+                        <option value="Arts">ศิลปะ</option>
+                        <option value="Technology">การงานอาชีพและเทคโนโลยี</option>
+                        <option value="Other">อื่นๆ</option>
                     </select>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label for="credits" class="form-label text-muted fw-semibold small">Credits <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control" id="credits" name="credits" step="0.5" min="0" placeholder="e.g. 1.5" required>
+                    <label for="credits" class="form-label text-muted fw-semibold small">หน่วยกิต <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="credits" name="credits" step="0.5" min="0" placeholder="เช่น 1.5" required>
                 </div>
             </div>
             
             <div class="mb-3">
-                <label for="description" class="form-label text-muted fw-semibold small">Description (Optional)</label>
-                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Brief subject description..."></textarea>
+                <label for="description" class="form-label text-muted fw-semibold small">คำอธิบายรายวิชา (ถ้ามี)</label>
+                <textarea class="form-control" id="description" name="description" rows="3" placeholder="คำอธิบายรายวิชาโดยย่อ..."></textarea>
             </div>
 
           </div>
           
           <div class="modal-footer bg-light">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save Subject</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="submit" class="btn btn-primary">บันทึกข้อมูล</button>
           </div>
       </form>
     </div>
@@ -301,7 +301,7 @@ include 'includes/header.php';
   <div class="modal-dialog">
     <div class="modal-content border-0 shadow">
       <div class="modal-header bg-light">
-        <h5 class="modal-title text-dark" id="editSubjectModalLabel"><i class="fas fa-edit me-2 text-primary"></i> Edit Subject</h5>
+        <h5 class="modal-title text-dark" id="editSubjectModalLabel"><i class="fas fa-edit me-2 text-primary"></i> แก้ไขข้อมูลรายวิชา</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="POST" action="subjects.php">
@@ -313,47 +313,47 @@ include 'includes/header.php';
 
             <div class="row">
                 <div class="col-md-5 mb-3">
-                    <label for="edit_subject_code" class="form-label text-muted fw-semibold small">Subject Code <span class="text-danger">*</span></label>
+                    <label for="edit_subject_code" class="form-label text-muted fw-semibold small">รหัสวิชา <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="edit_subject_code" name="subject_code" required>
                 </div>
                 <div class="col-md-7 mb-3">
-                    <label for="edit_subject_name" class="form-label text-muted fw-semibold small">Subject Name <span class="text-danger">*</span></label>
+                    <label for="edit_subject_name" class="form-label text-muted fw-semibold small">ชื่อวิชา <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="edit_subject_name" name="subject_name" required>
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-md-8 mb-3">
-                    <label for="edit_department" class="form-label text-muted fw-semibold small">Department <span class="text-danger">*</span></label>
+                    <label for="edit_department" class="form-label text-muted fw-semibold small">กลุ่มสาระการเรียนรู้ <span class="text-danger">*</span></label>
                     <select class="form-select" id="edit_department" name="department" required>
-                        <option value="">Select Department...</option>
-                        <option value="Mathematics">Mathematics</option>
-                        <option value="Science">Science</option>
-                        <option value="Thai Language">Thai Language</option>
-                        <option value="Foreign Languages">Foreign Languages</option>
-                        <option value="Social Studies">Social Studies</option>
-                        <option value="Physical Education">Physical Education</option>
-                        <option value="Arts">Arts</option>
-                        <option value="Technology">Technology</option>
-                        <option value="Other">Other</option>
+                        <option value="">เลือกกลุ่มสาระ...</option>
+                        <option value="Mathematics">คณิตศาสตร์</option>
+                        <option value="Science">วิทยาศาสตร์</option>
+                        <option value="Thai Language">ภาษาไทย</option>
+                        <option value="Foreign Languages">ภาษาต่างประเทศ</option>
+                        <option value="Social Studies">สังคมศึกษา</option>
+                        <option value="Physical Education">สุขศึกษาและพลศึกษา</option>
+                        <option value="Arts">ศิลปะ</option>
+                        <option value="Technology">การงานอาชีพและเทคโนโลยี</option>
+                        <option value="Other">อื่นๆ</option>
                     </select>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label for="edit_credits" class="form-label text-muted fw-semibold small">Credits <span class="text-danger">*</span></label>
+                    <label for="edit_credits" class="form-label text-muted fw-semibold small">หน่วยกิต <span class="text-danger">*</span></label>
                     <input type="number" class="form-control" id="edit_credits" name="credits" step="0.5" min="0" required>
                 </div>
             </div>
             
             <div class="mb-3">
-                <label for="edit_description" class="form-label text-muted fw-semibold small">Description (Optional)</label>
+                <label for="edit_description" class="form-label text-muted fw-semibold small">คำอธิบายรายวิชา (ถ้ามี)</label>
                 <textarea class="form-control" id="edit_description" name="description" rows="3"></textarea>
             </div>
 
           </div>
           
           <div class="modal-footer bg-light">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Update Subject</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="submit" class="btn btn-primary">บันทึกการแก้ไข</button>
           </div>
       </form>
     </div>

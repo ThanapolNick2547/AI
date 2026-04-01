@@ -321,7 +321,7 @@ include 'includes/header.php';
   <div class="modal-dialog">
     <div class="modal-content border-0 shadow">
       <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="addStudentModalLabel"><i class="fas fa-user-plus me-2"></i> Add New Student</h5>
+        <h5 class="modal-title" id="addStudentModalLabel"><i class="fas fa-user-plus me-2"></i> เพิ่มข้อมูลนักเรียนใหม่</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="POST" action="students.php" enctype="multipart/form-data">
@@ -331,33 +331,33 @@ include 'includes/header.php';
           <div class="modal-body">
             
             <div class="mb-3 text-center">
-                <label for="profile_picture" class="form-label text-muted fw-semibold small d-block text-start">Profile Picture (Max 2MB)</label>
+                <label for="profile_picture" class="form-label text-muted fw-semibold small d-block text-start">รูปโปรไฟล์ (ขนาดสูงสุด 2MB)</label>
                 <div class="input-group">
                     <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/png, image/jpeg, image/gif, image/webp">
                 </div>
             </div>
 
             <div class="mb-3">
-                <label for="student_code" class="form-label text-muted fw-semibold small">Student ID / Code <span class="text-danger">*</span></label>
+                <label for="student_code" class="form-label text-muted fw-semibold small">รหัสนักเรียน <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="student_code" name="student_code" required>
             </div>
             
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="first_name" class="form-label text-muted fw-semibold small">First Name <span class="text-danger">*</span></label>
+                    <label for="first_name" class="form-label text-muted fw-semibold small">ชื่อ <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="first_name" name="first_name" required>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="last_name" class="form-label text-muted fw-semibold small">Last Name <span class="text-danger">*</span></label>
+                    <label for="last_name" class="form-label text-muted fw-semibold small">นามสกุล <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="last_name" name="last_name" required>
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="class_level" class="form-label text-muted fw-semibold small">Class Level <span class="text-danger">*</span></label>
+                    <label for="class_level" class="form-label text-muted fw-semibold small">ระดับชั้น <span class="text-danger">*</span></label>
                     <select class="form-select" id="class_level" name="class_level" required>
-                        <option value="">Select Level...</option>
+                        <option value="">เลือกระดับชั้น...</option>
                         <option value="M.1">M.1</option>
                         <option value="M.2">M.2</option>
                         <option value="M.3">M.3</option>
@@ -367,21 +367,21 @@ include 'includes/header.php';
                     </select>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="room_number" class="form-label text-muted fw-semibold small">Room Number <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="room_number" name="room_number" placeholder="e.g. 1" required>
+                    <label for="room_number" class="form-label text-muted fw-semibold small">ห้องเรียน <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="room_number" name="room_number" placeholder="เช่น 1" required>
                 </div>
             </div>
             
             <div class="mb-3">
-                <label for="parent_phone" class="form-label text-muted fw-semibold small">Parent Phone Number</label>
+                <label for="parent_phone" class="form-label text-muted fw-semibold small">เบอร์โทรผู้ปกครอง</label>
                 <input type="text" class="form-control" id="parent_phone" name="parent_phone">
             </div>
 
           </div>
           
           <div class="modal-footer bg-light">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save Student</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="submit" class="btn btn-primary">บันทึกข้อมูล</button>
           </div>
       </form>
     </div>
@@ -393,7 +393,7 @@ include 'includes/header.php';
   <div class="modal-dialog">
     <div class="modal-content border-0 shadow">
       <div class="modal-header bg-light">
-        <h5 class="modal-title text-dark" id="editStudentModalLabel"><i class="fas fa-edit me-2 text-primary"></i> Edit Student</h5>
+        <h5 class="modal-title text-dark" id="editStudentModalLabel"><i class="fas fa-edit me-2 text-primary"></i> แก้ไขข้อมูลนักเรียน</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="POST" action="students.php" enctype="multipart/form-data">
@@ -404,32 +404,32 @@ include 'includes/header.php';
           <div class="modal-body">
 
             <div class="mb-3">
-                <label for="edit_profile_picture" class="form-label text-muted fw-semibold small">Update Profile Picture</label>
+                <label for="edit_profile_picture" class="form-label text-muted fw-semibold small">อัปเดตรูปโปรไฟล์</label>
                 <input type="file" class="form-control" id="edit_profile_picture" name="profile_picture" accept="image/png, image/jpeg, image/gif, image/webp">
-                <small class="text-muted">Leave empty to keep current picture.</small>
+                <small class="text-muted">หากไม่เลือกไฟล์ใหม่ รูปเดิมจะถูกเก็บไว้</small>
             </div>
 
             <div class="mb-3">
-                <label for="edit_student_code" class="form-label text-muted fw-semibold small">Student ID / Code <span class="text-danger">*</span></label>
+                <label for="edit_student_code" class="form-label text-muted fw-semibold small">รหัสนักเรียน <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="edit_student_code" name="student_code" required>
             </div>
             
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="edit_first_name" class="form-label text-muted fw-semibold small">First Name <span class="text-danger">*</span></label>
+                    <label for="edit_first_name" class="form-label text-muted fw-semibold small">ชื่อ <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="edit_first_name" name="first_name" required>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="edit_last_name" class="form-label text-muted fw-semibold small">Last Name <span class="text-danger">*</span></label>
+                    <label for="edit_last_name" class="form-label text-muted fw-semibold small">นามสกุล <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="edit_last_name" name="last_name" required>
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="edit_class_level" class="form-label text-muted fw-semibold small">Class Level <span class="text-danger">*</span></label>
+                    <label for="edit_class_level" class="form-label text-muted fw-semibold small">ระดับชั้น <span class="text-danger">*</span></label>
                     <select class="form-select" id="edit_class_level" name="class_level" required>
-                        <option value="">Select Level...</option>
+                        <option value="">เลือกระดับชั้น...</option>
                         <option value="M.1">M.1</option>
                         <option value="M.2">M.2</option>
                         <option value="M.3">M.3</option>
@@ -439,21 +439,21 @@ include 'includes/header.php';
                     </select>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="edit_room_number" class="form-label text-muted fw-semibold small">Room Number <span class="text-danger">*</span></label>
+                    <label for="edit_room_number" class="form-label text-muted fw-semibold small">ห้องเรียน <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="edit_room_number" name="room_number" required>
                 </div>
             </div>
             
             <div class="mb-3">
-                <label for="edit_parent_phone" class="form-label text-muted fw-semibold small">Parent Phone Number</label>
+                <label for="edit_parent_phone" class="form-label text-muted fw-semibold small">เบอร์โทรผู้ปกครอง</label>
                 <input type="text" class="form-control" id="edit_parent_phone" name="parent_phone">
             </div>
 
           </div>
           
           <div class="modal-footer bg-light">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Update Student</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="submit" class="btn btn-primary">บันทึกการแก้ไข</button>
           </div>
       </form>
     </div>
